@@ -12,7 +12,6 @@ textLabel.Parent = screenGui
 textLabel.Size = UDim2.new(0, 300, 0, 50)
 textLabel.Position = UDim2.new(0.5, -150, 0.5, -25) -- Căn giữa màn hình
 textLabel.Font = Enum.Font.FredokaOne
-textLabel.TextScaled = true
 textLabel.BackgroundTransparency = 1
 textLabel.TextStrokeTransparency = 0
 textLabel.TextColor3 = Color3.new(1, 0, 0) -- Màu đỏ
@@ -20,7 +19,15 @@ textLabel.ZIndex = 999 -- Ưu tiên hiển thị cao nhất
 
 local frameCount = 0
 local lastUpdate = tick()
+local textSize = 200 -- Kích thước chữ ban đầu
 
+-- Hàm cập nhật kích thước chữ
+local function updateTextSize(size)
+    textSize = size
+    textLabel.TextSize = textSize
+end
+
+-- Cập nhật FPS mỗi khung hình
 RunService.RenderStepped:Connect(function()
     frameCount = frameCount + 1
     local now = tick()
@@ -33,3 +40,6 @@ RunService.RenderStepped:Connect(function()
         textLabel.Text = string.format("FPS: %d", math.floor(fps)) -- Hiển thị FPS
     end
 end)
+
+-- Áp dụng kích thước chữ ban đầu
+updateTextSize(200) -- Bạn có thể thay đổi con số này để tăng/giảm kích thước chữ
