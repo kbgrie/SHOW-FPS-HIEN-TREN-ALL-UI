@@ -1,0 +1,35 @@
+local RunService = game:GetService("RunService")
+
+local screenGui = Instance.new("ScreenGui")
+local textLabel = Instance.new("TextLabel")
+
+-- Đảm bảo ScreenGui luôn hiển thị trên cùng
+screenGui.Parent = game.CoreGui
+screenGui.DisplayOrder = 999 -- Mức ưu tiên cao nhất
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global -- Đảm bảo thứ tự ZIndex là toàn cục
+
+textLabel.Parent = screenGui
+textLabel.Size = UDim2.new(0, 300, 0, 50)
+textLabel.Position = UDim2.new(0.5, -150, 0.5, -25) -- Căn giữa màn hình
+textLabel.Font = Enum.Font.FredokaOne
+textLabel.TextScaled = true
+textLabel.BackgroundTransparency = 1
+textLabel.TextStrokeTransparency = 0
+textLabel.TextColor3 = Color3.new(1, 0, 0) -- Màu đỏ
+textLabel.ZIndex = 999 -- Ưu tiên hiển thị cao nhất
+
+local frameCount = 0
+local lastUpdate = tick()
+
+RunService.RenderStepped:Connect(function()
+    frameCount = frameCount + 1
+    local now = tick()
+
+    if now - lastUpdate >= 1 then
+        local fps = frameCount / (now - lastUpdate)
+        frameCount = 0
+        lastUpdate = now
+
+        textLabel.Text = string.format("FPS: %d", math.floor(fps)) -- Hiển thị FPS
+    end
+end)
